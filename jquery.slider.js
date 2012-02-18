@@ -1,5 +1,14 @@
-/* SLIDER PLUGIN 
- * 
+/*!
+ * slider v@VERSION - Yet another slider for jQuery
+ *
+ * Copyright 2012, Alexander (SASh) Alexiev @ Edge Soft Ltd.
+ * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
+ * or GPL Version 2 (http://www.opensource.org/licenses/gpl-2.0.php) licenses.
+ *
+ * Date: @DATE
+ */
+
+/**
  * HTML Structure:
  * .frame
  *	.carousel
