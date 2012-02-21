@@ -30,6 +30,7 @@
 				if (!$this.data('slider')){
 					var settings = $.extend( {
 						'animate'				: 0.5,
+						'animateEasing': 'swing',
 						'auto'					: 5.5,
 						'pauseOnHover'	: true,
 						'struct': {
@@ -77,7 +78,7 @@
 				var w = $this.find(settings.struct.carousel+' '+index).outerWidth();
 				var margin = -1*w*parseInt(index.substr(('#'+settings.struct.idPrefix).length));
 				if (settings.animate){
-					$this.find(settings.struct.carousel).clearQueue().animate({'margin-left':margin}, settings.animate*1000);
+					$this.find(settings.struct.carousel).clearQueue().animate({'margin-left':margin}, settings.animate*1000, settings.animateEasing);
 				}
 				else{
 					$this.find(settings.struct.carousel).css('margin-left', margin)
