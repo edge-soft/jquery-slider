@@ -10,7 +10,11 @@
 		});
 	</script>
 	<style>
-		
+/**
+* The minimum required style for the slider to work!
+* Restruct the frame to the width and height of the image and overflow: hidden
+* The carousel must not wrap the whitespace
+*/
 .slider .frame {
   width: 395px;
   height: 163px;
@@ -26,12 +30,14 @@
 	<div class="slider">
 		<div class="frame">
 			<div class="carousel">
+				<!-- Avoid whitespace b/n element -->
 				<a id="slider_0" href="#"><img src="http://www.google.com/logos/2012/barto12-hp.jpg" alt="" height="163" width="395"/></a><a
 				id="slider_1" href="#"><img src="http://www.google.com/logos/2012/Lithuania_Independence-2012-hp.jpg" alt="" height="163" width="395"/></a><a
 				id="slider_2" href="#"><img src="http://www.google.com/logos/2012/serbia12-hp.jpg" alt="" height="163" width="395"/></a>
 			</div>
 		</div>
 		<a href="#" class="prev">previous</a>
+		<!-- Always mark the first slide as selected! This is how the slider determines the slide that is visible! -->
 		<a href="#slider_0" class="slide selected">1</a>
 		<a href="#slider_1" class="slide">2</a>
 		<a href="#slider_2" class="slide">3</a>
