@@ -14,7 +14,7 @@
  *	.carousel
  *		#slider_X
  * a.prev
- * a.slide#slider_x (a.slide.selected#slider_x)
+ * a.slide#slider_X (a.slide.selected#slider_X)
  * a.next
  * */
 (function($){
