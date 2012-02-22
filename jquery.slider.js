@@ -22,9 +22,9 @@
 		var settings = el.data('slider');
 		return parseInt(el.find(settings.struct.carousel+'>*:last-child').attr('id').substr('slider_'.length));
 	}
-  var methods = {
-    init : function( options ) { 
-      return this.each(function(){
+	var methods = {
+		init : function( options ) { 
+			return this.each(function(){
 				var $this = $(this);
 				
 				if (!$this.data('slider')){
@@ -69,16 +69,18 @@
 						return false;
 					});
 				}
-			 });
-    },
-    show : function( index ) {
+			});
+		},
+		show : function( index ) {
 			return this.each(function(){
 				if (!index)return;
 				var $this = $(this), settings = $this.data('slider');
 				var w = $this.find(settings.struct.carousel+' '+index).outerWidth();
 				var margin = -1*w*parseInt(index.substr(('#'+settings.struct.idPrefix).length));
 				if (settings.animate){
-					$this.find(settings.struct.carousel).clearQueue().animate({'margin-left':margin}, settings.animate*1000, settings.animateEasing);
+					$this.find(settings.struct.carousel).clearQueue().animate({
+						'margin-left':margin
+					}, settings.animate*1000, settings.animateEasing);
 				}
 				else{
 					$this.find(settings.struct.carousel).css('margin-left', margin)
@@ -86,7 +88,7 @@
 				$this.find(settings.struct.slide).removeClass(settings.selectedClass);
 				$this.find(settings.struct.slide+'[href='+index+']').addClass(settings.selectedClass);
 			});
-    },
+		},
 		selected: function (){
 			var $this = $(this), settings = $this.data('slider');
 			return $this.find(settings.struct.slide+'.'+settings.selectedClass).attr('href');
@@ -131,19 +133,19 @@
 				}
 			})
 		}
-  };
+	};
 
 
 	$.fn.slider =	function(method){
 		
-    // Method calling logic
-    if ( methods[method] ) {
-      return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-    } else if ( typeof method === 'object' || ! method ) {
-      return methods.init.apply( this, arguments );
-    } else {
-      $.error( 'Method ' +  method + ' does not exist on jQuery.slider' );
-    }    
+		// Method calling logic
+		if ( methods[method] ) {
+			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+		} else if ( typeof method === 'object' || ! method ) {
+			return methods.init.apply( this, arguments );
+		} else {
+			$.error( 'Method ' +  method + ' does not exist on jQuery.slider' );
+		}    
   
 	};
 	
