@@ -12,9 +12,9 @@
  * HTML Structure:
  * .frame
  *	.carousel
- *		#slider_X
+ *		#slider_X (the element must be emidiate child of the .carousel - .carousel>#slider_X)
  * a.prev
- * a.slide#slider_X (a.slide.selected#slider_X)
+ * a.slide[href=#slider_X] (a.slide.selected[href=#slider_X])
  * a.next
  * */
 (function($){
