@@ -135,7 +135,8 @@
 		},
 		destroy: function(){
 			return this.each(function(){
-				$(this).unbind('.slider');
+				$(this).unbind('.slider').removeData('slider');
+				
 			})
 		}
 		
