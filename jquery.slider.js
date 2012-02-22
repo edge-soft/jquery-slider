@@ -30,7 +30,7 @@
 				if (!$this.data('slider')){
 					var settings = $.extend( {
 						'animate'				: 0.5,
-						'animateEasing': 'swing',
+						'animateEasing'	: 'swing',
 						'auto'					: 5.5,
 						'pauseOnHover'	: true,
 						'struct': {
@@ -49,22 +49,22 @@
 						$this.slider('resume');
 					}
 					if (settings.pauseOnHover){
-						$this.hover(function(){
+						$this.on('mouseenter.slider', function(){
 							$this.slider('pause');
-						}, function(){
+						}).on('mouseleave.slider', function(){
 							$this.slider('resume');
 						});
 					}
 					
-					$this.on('click', settings.struct.next, function(){
+					$this.on('click.slider', settings.struct.next, function(){
 						$this.slider('show', $this.slider('next'));
 						return false;
 					});
-					$this.on('click', settings.struct.prev, function(){
+					$this.on('click.slider', settings.struct.prev, function(){
 						$this.slider('show', $this.slider('prev'));
 						return false;
 					});
-					$this.on('click', settings.struct.slide, function(){
+					$this.on('click.slider', settings.struct.slide, function(){
 						$this.slider('show', $(this).attr('href'));
 						return false;
 					});
@@ -132,7 +132,13 @@
 					$this.data('slider', settings);
 				}
 			})
+		},
+		destroy: function(){
+			return this.each(function(){
+				$(this).unbind('.slider');
+			})
 		}
+		
 	};
 
 
