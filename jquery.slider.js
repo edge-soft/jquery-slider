@@ -28,7 +28,7 @@
 				var $this = $(this);
 				
 				if (!$this.data('slider')){
-					var settings = $.extend( {
+					var default_settings = {
 						'animate'				: 0.5,
 						'animateEasing'	: 'swing',
 						'auto'					: 5.5,
@@ -42,7 +42,9 @@
 							'idPrefix'		: 'slider_'
 						},
 						'selectedClass'	: 'selected'
-					}, options);
+					}
+					if (options.struct) options.struct = $.extend( default_settings.struct, options.struct);
+					var settings = $.extend( default_settings, options);
 					$this.data('slider', settings);
 					
 					if (settings.auto){
