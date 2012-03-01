@@ -20,7 +20,7 @@
 (function($){
 	var maxSlide = function(el){
 		var settings = el.data('slider');
-		return parseInt(el.find(settings.struct.carousel+'>*:last-child').attr('id').substr('slider_'.length));
+		return parseInt(el.find(settings.struct.carousel+'>*:last-child').attr('id').substr(settings.struct.idPrefix.length));
 	}
 	var methods = {
 		init : function( options ) { 
