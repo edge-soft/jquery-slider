@@ -43,7 +43,7 @@
 						},
 						'selectedClass'	: 'selected'
 					}
-					if (options.struct) options.struct = $.extend( default_settings.struct, options.struct);
+					if (typeof options != 'undefined' && options.struct) options.struct = $.extend( default_settings.struct, options.struct);
 					var settings = $.extend( default_settings, options);
 					$this.data('slider', settings);
 					
