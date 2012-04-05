@@ -47,6 +47,8 @@
 					var settings = $.extend( default_settings, options);
 					$this.data('slider', settings);
 					
+					$this.find(settings.struct.carousel).css('width', $this.find(settings.struct.carousel+' '+'#'+settings.struct.idPrefix+'0').outerWidth() * (maxSlide($this)+1))
+					
 					if (settings.auto){
 						$this.slider('resume');
 					}
