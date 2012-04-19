@@ -20,7 +20,8 @@
 (function($){
 	var maxSlide = function(el){
 		var settings = el.data('slider');
-		return parseInt(el.find(settings.struct.carousel+'>*:last-child').attr('id').substr(settings.struct.idPrefix.length));
+		var all_sliders = el.find(settings.struct.carousel+'>*')
+		return all_sliders.index(el.find(settings.struct.carousel+'>*:last-child'));
 	}
 	var methods = {
 		init : function( options ) { 
@@ -41,7 +42,8 @@
 							'slide'				: 'a.slide',
 							'idPrefix'		: 'slider_'
 						},
-						'selectedClass'	: 'selected'
+						'selectedClass'	: 'selected',
+						'continous' : true
 					}
 					if (typeof options != 'undefined' && options.struct) options.struct = $.extend( default_settings.struct, options.struct);
 					var settings = $.extend( default_settings, options);
@@ -80,14 +82,56 @@
 				if (!index)return;
 				var $this = $(this), settings = $this.data('slider');
 				var w = $this.find(settings.struct.carousel+' '+index).outerWidth();
-				var margin = -1*w*parseInt(index.substr(('#'+settings.struct.idPrefix).length));
+				var target_element = $this.find(settings.struct.carousel+' '+index)
+				var sel_element = $this.find(settings.struct.carousel+' '+$this.slider('selected'))
+				var parent = target_element.parent();
+				var index_diff = 0
+				var slider_elements = parent.find('>*')
+				var sel_element_index = slider_elements.index(sel_element)
+				var target_el_index = slider_elements.index(target_element)
+				var margin = 0
+				var animate_el = $this.find(settings.struct.carousel)
+				if(settings.continous && !settings.freeze_elements && slider_elements.length<2){
+					if(!sel_element.next().length && !target_element.prev().length && settings.animate){
+						index_diff = -1
+						settings.freeze_elements = true
+						parent.append(target_element)
+					}
+					else if(!sel_element.prev().length && !target_element.next().length && settings.animate){
+						index_diff = 1
+						settings.freeze_elements = true
+						parent.prepend(target_element)
+					}
+					$this.data('slider', settings);
+				}
+				if(index_diff){
+					margin = -1*w*(sel_element_index);
+					animate_el.css('margin-left', -1*w*(sel_element_index+index_diff))
+				}else{
+					margin = -1*w*(target_el_index);
+				}
 				if (settings.animate){
-					$this.find(settings.struct.carousel).clearQueue().animate({
+					animate_el.clearQueue().animate({
 						'margin-left':margin
-					}, settings.animate*1000, settings.animateEasing);
+					}, settings.animate*1000, settings.animateEasing,function(){
+						switch (index_diff) {
+							case -1:
+								animate_el.css('margin-left', -1*w*0)
+								parent.prepend(target_element)
+								break;
+							case 1:
+								animate_el.css('margin-left', -1*w*(slider_elements.length-1))
+								parent.append(target_element)
+								break;
+						}
+						if(index_diff)
+							settings.freeze_elements = false
+						$this.data('slider', settings);
+
+					});
 				}
 				else{
-					$this.find(settings.struct.carousel).css('margin-left', margin)
+					animate_el.css('margin-left', margin)
 				}
 				$this.find(settings.struct.slide).removeClass(settings.selectedClass);
 				$this.find(settings.struct.slide+'[href='+index+']').addClass(settings.selectedClass);
