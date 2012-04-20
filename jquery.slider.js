@@ -91,7 +91,7 @@
 				var target_el_index = slider_elements.index(target_element)
 				var margin = 0
 				var animate_el = $this.find(settings.struct.carousel)
-				if(settings.continous && !settings.freeze_elements && slider_elements.length<2){
+				if(settings.continous && !settings.freeze_elements && slider_elements.length>2){
 					if(!sel_element.next().length && !target_element.prev().length && settings.animate){
 						index_diff = -1
 						settings.freeze_elements = true
