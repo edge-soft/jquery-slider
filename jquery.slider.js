@@ -138,8 +138,10 @@
 			});
 		},
 		selected: function (){
-			var $this = $(this), settings = $this.data('slider');
-			return $this.find(settings.struct.slide+'.'+settings.selectedClass).attr('href');
+			return this.each(function(){
+				var $this = $(this), settings = $this.data('slider');
+				return $this.find(settings.struct.slide+'.'+settings.selectedClass).attr('href');
+			});
 		},
 		next: function(){
 			var $this = $(this), settings = $this.data('slider');
