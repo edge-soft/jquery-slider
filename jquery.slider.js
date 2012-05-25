@@ -43,7 +43,7 @@
 							'idPrefix'		: 'slider_'
 						},
 						'selectedClass'	: 'selected',
-						'continous' : true
+						'continous' : false
 					}
 					if (typeof options != 'undefined' && options.struct) options.struct = $.extend( default_settings.struct, options.struct);
 					var settings = $.extend( default_settings, options);
