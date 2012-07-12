@@ -62,22 +62,27 @@
 						});
 					}
 					
-					$this.on('click.slider', settings.struct.next, function(){
+					$this.on('click.slider', settings.struct.next, function(e){e.preventDefault();
 						$this.slider('show', $this.slider('next'));
 						return false;
 					});
-					$this.on('click.slider', settings.struct.prev, function(){
+					$this.on('click.slider', settings.struct.prev, function(e){e.preventDefault();
 						$this.slider('show', $this.slider('prev'));
 						return false;
 					});
-					$this.on('click.slider', settings.struct.slide, function(){
+					
+					$this.on('click.slider', settings.struct.slide, function(e){e.preventDefault();
 						$this.slider('show', $(this).attr('href'));
 						return false;
 					});
+					$(window).on('resize.slider', function(e){
+						$this.slider('show', $this.slider('selected'), true);
+						return false;
+					})
 				}
 			});
 		},
-		show : function( index ) {
+		show : function( index, no_animation ) {
 			return this.each(function(){
 				if (!index)return;
 				var $this = $(this), settings = $this.data('slider');
@@ -110,7 +115,7 @@
 				}else{
 					margin = -1*w*(target_el_index);
 				}
-				if (settings.animate){
+				if (settings.animate && !no_animation){
 					animate_el.clearQueue().animate({
 						'margin-left':margin
 					}, settings.animate*1000, settings.animateEasing,function(){
@@ -188,7 +193,7 @@
 		destroy: function(){
 			return this.each(function(){
 				$(this).unbind('.slider').removeData('slider');
-				
+				$(window).unbind('.slider');
 			})
 		}
 		
