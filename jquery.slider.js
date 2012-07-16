@@ -113,7 +113,8 @@
 						swipeLeft:swipe,
 						swipeRight:swipe,
 						swipeStatus: swipeStatus,
-						threshold:0
+						threshold:0,
+						allowPageScroll: 'vertical'
 					}
 
 					$this.swipe(swipeOptions);
