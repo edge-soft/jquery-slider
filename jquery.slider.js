@@ -104,7 +104,7 @@
 							$this.slider('resume');
 						}
 						if (phase == 'move'){
-							$this.slider('offset', direction == 'left'?distance*-1:distance);
+							$this.slider('offset', direction == 'left'?distance*-1:distance, duration);
 						}
 						
 					}
@@ -123,7 +123,7 @@
 				}
 			});
 		},
-		offset: function (distance){
+		offset: function (distance, duration){
 			return this.each(function(){
 				
 				var $this = $(this), settings = $this.data('slider');
@@ -135,6 +135,8 @@
 					animate_el.data('slider.initialMargin', initial_margin);
 				}
 				animate_el.css('margin-left', (initial_margin + distance)+'px');
+				//console.log(Math.abs(distance/duration));
+				animate_el.data('slider.offsetSpeed', Math.abs(distance/duration));
 			});
 		},
 		show : function( index, no_animation ) {
@@ -152,6 +154,8 @@
 				var margin = 0
 				var animate_el = $this.find(settings.struct.carousel)
 				animate_el.removeData('slider.initialMargin');
+				var offsetSpeed = animate_el.data('slider.offsetSpeed');
+				animate_el.removeData('slider.offsetSpeed');
 				if(settings.continous && !settings.freeze_elements && slider_elements.length>2){
 					if(!sel_element.next().length && !target_element.prev().length && settings.animate){
 						index_diff = -1
@@ -172,9 +176,14 @@
 					margin = -1*w*(target_el_index);
 				}
 				if (settings.animate && !no_animation){
+					var speed = settings.animate*1000;
+					if (typeof offsetSpeed!='undefined'){
+						var distance = Math.abs(margin - parseInt(animate_el.css('margin-left').substring(0, animate_el.css('margin-left').length-2)));
+						speed = distance/offsetSpeed;
+					}
 					animate_el.clearQueue().animate({
 						'margin-left':margin
-					}, settings.animate*1000, settings.animateEasing,function(){
+					}, speed, settings.animateEasing,function(){
 						switch (index_diff) {
 							case -1:
 								animate_el.css('margin-left', -1*w*0)
