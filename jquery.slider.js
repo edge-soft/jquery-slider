@@ -66,19 +66,12 @@
 						$this.slider('show', $this.slider('next'));
 						return false;
 					});
-					$this.on('swiperight.slider', function(e){e.preventDefault();
-						$this.slider('show', $this.slider('next'));
-						return false;
-					});
+				
 					$this.on('click.slider', settings.struct.prev, function(e){e.preventDefault();
 						$this.slider('show', $this.slider('prev'));
 						return false;
 					});
-					$this.on('swipeleft.slider', function(e){e.preventDefault();
-						$this.slider('show', $this.slider('prev'));
-						return false;
-					});
-					
+				
 					$this.on('click.slider', settings.struct.slide, function(e){e.preventDefault();
 						$this.slider('show', $(this).attr('href'));
 						return false;
@@ -89,6 +82,28 @@
 					
 						return false;
 					})
+					
+
+
+					/* end of dynamic vin check */
+					function swipe(event, direction)
+					{
+						if (direction == 'left')
+						$this.slider('show', $this.slider('next'));
+						else
+						$this.slider('show', $this.slider('prev'));
+						return false;
+					}
+					var swipeOptions=
+					{
+						swipeLeft:swipe,
+						swipeRight:swipe,
+						threshold:0
+					}
+
+					$this.swipe(swipeOptions);
+
+
 				}
 			});
 		},
