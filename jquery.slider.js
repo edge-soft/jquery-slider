@@ -113,7 +113,7 @@
 						swipeLeft:swipe,
 						swipeRight:swipe,
 						swipeStatus: swipeStatus,
-						threshold:0,
+						threshold:10,
 						allowPageScroll: 'vertical'
 					}
 
