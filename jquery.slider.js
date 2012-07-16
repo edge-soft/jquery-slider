@@ -87,38 +87,39 @@
 
 
 					/* SWIPE integration */
-					var swipe = function (event, direction)
-					{
-						if (direction == 'left')
-						$this.slider('show', $this.slider('next'));
-						else
-						$this.slider('show', $this.slider('prev'));
-						return false;
-					}
-					var swipeStatus = function (event, phase, direction, distance, duration)
-					{
-						if (phase == 'start'){
-							$this.slider('pause');
+					if ($this.swipe){
+						var swipe = function (event, direction)
+						{
+							if (direction == 'left')
+							$this.slider('show', $this.slider('next'));
+							else
+							$this.slider('show', $this.slider('prev'));
+							return false;
 						}
-						if (phase == 'end' || phase == 'cancel'){
-							$this.slider('resume');
-						}
-						if (phase == 'move'){
-							$this.slider('offset', direction == 'left'?distance*-1:distance, duration);
-						}
-						
-					}
-					var swipeOptions=
-					{
-						swipeLeft:swipe,
-						swipeRight:swipe,
-						swipeStatus: swipeStatus,
-						threshold:10,
-						allowPageScroll: 'vertical'
-					}
+						var swipeStatus = function (event, phase, direction, distance, duration)
+						{
+							if (phase == 'start'){
+								$this.slider('pause');
+							}
+							if (phase == 'end' || phase == 'cancel'){
+								$this.slider('resume');
+							}
+							if (phase == 'move'){
+								$this.slider('offset', direction == 'left'?distance*-1:distance, duration);
+							}
 
-					$this.swipe(swipeOptions);
+						}
+						var swipeOptions=
+						{
+							swipeLeft:swipe,
+							swipeRight:swipe,
+							swipeStatus: swipeStatus,
+							threshold:10,
+							allowPageScroll: 'vertical'
+						}
 
+						$this.swipe(swipeOptions);
+					}
 
 				}
 			});
