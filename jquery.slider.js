@@ -86,7 +86,13 @@
 					
 
 
-					/* SWIPE integration */
+					/* touchSwipe integration 
+					 * 
+					 * Get it from:
+					 * https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
+					 * http://labs.skinkers.com/touchSwipe/
+					 * http://plugins.jquery.com/project/touchSwipe
+					 * */
 					if ($this.swipe){
 						var swipe = function (event, direction)
 						{
