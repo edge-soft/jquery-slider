@@ -66,7 +66,15 @@
 						$this.slider('show', $this.slider('next'));
 						return false;
 					});
+					$this.on('swiperight.slider', function(e){e.preventDefault();
+						$this.slider('show', $this.slider('next'));
+						return false;
+					});
 					$this.on('click.slider', settings.struct.prev, function(e){e.preventDefault();
+						$this.slider('show', $this.slider('prev'));
+						return false;
+					});
+					$this.on('swipeleft.slider', function(e){e.preventDefault();
 						$this.slider('show', $this.slider('prev'));
 						return false;
 					});
