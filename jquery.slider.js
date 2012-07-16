@@ -77,6 +77,8 @@
 					});
 					$(window).on('resize.slider', function(e){
 						$this.slider('show', $this.slider('selected'), true);
+						$this.find(settings.struct.carousel).css('width', $this.find(settings.struct.carousel+' '+'#'+settings.struct.idPrefix+'0').outerWidth() * (maxSlide($this)+1))
+					
 						return false;
 					})
 				}
