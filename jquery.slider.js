@@ -71,11 +71,12 @@
 						$this.slider('show', $this.slider('prev'));
 						return false;
 					});
-				
+					
 					$this.on('click.slider', settings.struct.slide, function(e){e.preventDefault();
 						$this.slider('show', $(this).attr('href'));
 						return false;
 					});
+					
 					$(window).on('resize.slider', function(e){
 						$this.slider('show', $this.slider('selected'), true);
 						$this.find(settings.struct.carousel).css('width', $this.find(settings.struct.carousel+' '+'#'+settings.struct.idPrefix+'0').outerWidth() * (maxSlide($this)+1))
@@ -85,8 +86,8 @@
 					
 
 
-					/* end of dynamic vin check */
-					function swipe(event, direction)
+					/* SWIPE integration */
+					var swipe = function (event, direction)
 					{
 						if (direction == 'left')
 						$this.slider('show', $this.slider('next'));
@@ -94,10 +95,24 @@
 						$this.slider('show', $this.slider('prev'));
 						return false;
 					}
+					var swipeStatus = function (event, phase, direction, distance, duration)
+					{
+						if (phase == 'start'){
+							$this.slider('pause');
+						}
+						if (phase == 'end' || phase == 'cancel'){
+							$this.slider('resume');
+						}
+						if (phase == 'move'){
+							$this.slider('offset', direction == 'left'?distance*-1:distance);
+						}
+						
+					}
 					var swipeOptions=
 					{
 						swipeLeft:swipe,
 						swipeRight:swipe,
+						swipeStatus: swipeStatus,
 						threshold:0
 					}
 
@@ -105,6 +120,20 @@
 
 
 				}
+			});
+		},
+		offset: function (distance){
+			return this.each(function(){
+				
+				var $this = $(this), settings = $this.data('slider');
+				var animate_el = $this.find(settings.struct.carousel); 
+				
+				var initial_margin = animate_el.data('slider.initialMargin');
+				if (!initial_margin) {
+					initial_margin = parseInt(animate_el.css('margin-left').substring(0, animate_el.css('margin-left').length-2));
+					animate_el.data('slider.initialMargin', initial_margin);
+				}
+				animate_el.css('margin-left', (initial_margin + distance)+'px');
 			});
 		},
 		show : function( index, no_animation ) {
@@ -121,6 +150,7 @@
 				var target_el_index = slider_elements.index(target_element)
 				var margin = 0
 				var animate_el = $this.find(settings.struct.carousel)
+				animate_el.removeData('slider.initialMargin');
 				if(settings.continous && !settings.freeze_elements && slider_elements.length>2){
 					if(!sel_element.next().length && !target_element.prev().length && settings.animate){
 						index_diff = -1
