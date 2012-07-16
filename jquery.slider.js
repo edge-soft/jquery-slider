@@ -141,7 +141,7 @@
 					initial_margin = parseInt(animate_el.css('margin-left').substring(0, animate_el.css('margin-left').length-2));
 					animate_el.data('slider.initialMargin', initial_margin);
 				}
-				animate_el.css('margin-left', (initial_margin + distance)+'px');
+				animate_el.stop().css('margin-left', (initial_margin + distance)+'px');
 				//console.log(Math.abs(distance/duration));
 				animate_el.data('slider.offsetSpeed', Math.abs(distance/duration));
 			});
@@ -188,7 +188,7 @@
 						var distance = Math.abs(margin - parseInt(animate_el.css('margin-left').substring(0, animate_el.css('margin-left').length-2)));
 						speed = distance/offsetSpeed;
 					}
-					animate_el.clearQueue().animate({
+					animate_el.stop().clearQueue().animate({
 						'margin-left':margin
 					}, speed, settings.animateEasing,function(){
 						switch (index_diff) {
