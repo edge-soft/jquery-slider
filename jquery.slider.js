@@ -96,10 +96,24 @@
 					if ($this.swipe){
 						var swipe = function (event, direction)
 						{
-							if (direction == 'left')
-							$this.slider('show', $this.slider('next'));
-							else
-							$this.slider('show', $this.slider('prev'));
+							if (direction == 'left'){
+								// if not last
+								if ($this.slider('hasNext')){
+									$this.slider('show', $this.slider('next'));
+								}
+								else{
+									$this.slider('show', $this.slider('selected'));
+								}
+							}
+							else{
+								// if not first
+								if ($this.slider('hasPrev')){
+									$this.slider('show', $this.slider('prev'));
+								}
+								else{
+									$this.slider('show', $this.slider('selected'));
+								}
+							}
 							return false;
 						}
 						var swipeStatus = function (event, phase, direction, distance, duration)
@@ -222,6 +236,16 @@
 			});
 			return res;
 		},
+		hasNext: function(){
+			var $this = $(this), settings = $this.data('slider');
+			var selected = $this.slider('selected');
+			if (!selected)return false;
+			var res = selected.match(new RegExp('^\\#'+settings.struct.idPrefix+'([0-9]+)$'));
+			
+			if (!res || maxSlide($this) <= parseInt(res[1])) return false;
+			else return true;
+			
+		},
 		next: function(){
 			var $this = $(this), settings = $this.data('slider');
 			var selected = $this.slider('selected');
@@ -230,6 +254,16 @@
 				if (maxSlide($this) <= parseInt(id))return ('#'+settings.struct.idPrefix)+'0';
 				else return ('#'+settings.struct.idPrefix)+(parseInt(id)+1);
 			})
+		},
+		hasPrev: function(){
+			var $this = $(this), settings = $this.data('slider');
+			var selected = $this.slider('selected');
+			if (!selected)return false;
+			var res = selected.match(new RegExp('^\\#'+settings.struct.idPrefix+'([0-9]+)$'));
+			
+			//if (maxSlide($this) > id+1)return '#slider_0';
+			if (!res || parseInt(res[1])==0) return false;
+			else return true;
 		},
 		prev: function(){
 			var $this = $(this), settings = $this.data('slider');
