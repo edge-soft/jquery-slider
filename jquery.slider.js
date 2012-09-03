@@ -93,7 +93,7 @@
 					 * http://labs.skinkers.com/touchSwipe/
 					 * http://plugins.jquery.com/project/touchSwipe
 					 * */
-					if ($this.swipe && !$.browser.msie || $.browser.version >= 8.0 ){
+					if ($this.swipe && (!$.browser.msie || $.browser.version >= 8.0) ){
 						var swipe = function (event, direction)
 						{
 							if (direction == 'left'){
