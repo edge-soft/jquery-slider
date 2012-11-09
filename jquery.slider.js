@@ -43,7 +43,8 @@
 							'idPrefix'		: 'slider_'
 						},
 						'selectedClass'	: 'selected',
-						'continous' : false
+						'continous' : false,
+						'arrowsControl' : true
 					}
 					if (typeof options != 'undefined' && options.struct) options.struct = $.extend( default_settings.struct, options.struct);
 					var settings = $.extend( default_settings, options);
@@ -71,6 +72,28 @@
 						$this.slider('show', $this.slider('prev'));
 						return false;
 					});
+					
+					if(settings.arrowsControl){
+						$(window).on('keyup.slider', function(e){
+							var keyboardKey = e.which?e.which:e.keyCode
+							switch(keyboardKey){
+								case 37: // left arrow is pressed
+								case 39: // right arrow is pressed
+									$this.slider('pause');
+									$this.slider('resume');
+									break
+							}
+							switch(keyboardKey){
+								case 37: // left arrow is pressed
+									$this.slider('show', $this.slider('prev'));
+									break
+								case 39: // right arrow is pressed
+									$this.slider('show', $this.slider('next'));
+									break
+							}
+							return false;
+						});
+					}
 					
 					$this.on('click.slider', settings.struct.slide, function(e){e.preventDefault();
 						$this.slider('show', $(this).attr('href'));
