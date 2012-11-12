@@ -158,7 +158,8 @@
 							swipeRight:swipe,
 							swipeStatus: swipeStatus,
 							threshold:10,
-							allowPageScroll: 'vertical'
+							allowPageScroll: 'vertical',
+							excludedElements: 'button, input, select, textarea, .noSwipe'
 						}
 
 						$this.swipe(swipeOptions);
