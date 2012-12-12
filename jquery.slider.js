@@ -162,7 +162,7 @@
 							excludedElements: 'button, input, select, textarea, .noSwipe'
 						}
 
-						$this.swipe(swipeOptions);
+						$this.find(settings.struct.frame).swipe(swipeOptions);
 					}
 
 				}
