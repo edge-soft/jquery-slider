@@ -312,12 +312,28 @@
 		resume: function(){
 			return this.each(function(){
 				var $this = $(this), settings = $this.data('slider');
-				if (!settings.auto_interval){
+				if (!settings.auto_interval && !settings.stop){
 					settings.auto_interval = setInterval(function(){
 						$this.slider('show', $this.slider('next'));
 					}, settings.auto*1000);
 					$this.data('slider', settings);
 				}
+			})
+		},
+		stop: function(){
+			return this.each(function(){
+				var $this = $(this), settings = $this.data('slider');
+				settings.stop = true;
+				$this.data('slider', settings);
+				$this.slider('pause');
+			})
+		},
+		start: function(){
+			return this.each(function(){
+				var $this = $(this), settings = $this.data('slider');
+				settings.stop = false;
+				$this.data('slider', settings);
+				$this.slider('resume');
 			})
 		},
 		destroy: function(){
