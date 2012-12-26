@@ -75,6 +75,9 @@
 					
 					if(settings.arrowsControl){
 						$(window).on('keyup.slider', function(e){
+							if($(e.target).closest('.noSwipe').length){
+								return
+							}
 							var keyboardKey = e.which?e.which:e.keyCode
 							switch(keyboardKey){
 								case 37: // left arrow is pressed
