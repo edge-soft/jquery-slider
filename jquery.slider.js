@@ -37,8 +37,8 @@
 						'struct': {
 							'frame'				: '.frame',
 							'carousel'		: '.carousel',
-							'next'				: 'a.next',
-							'prev'				: 'a.prev',
+							'next'				: '.next',
+							'prev'				: '.prev',
 							'slide'				: 'a.slide',
 							'idPrefix'		: 'slider_'
 						},
