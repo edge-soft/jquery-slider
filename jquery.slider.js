@@ -50,8 +50,6 @@
 					var settings = $.extend( default_settings, options);
 					$this.data('slider', settings);
 					
-					$this.find(settings.struct.carousel).css('width', $this.find(settings.struct.carousel+' '+'#'+settings.struct.idPrefix+'0').outerWidth() * (maxSlide($this)+1))
-					
 					if (settings.auto){
 						$this.slider('resume');
 					}
@@ -105,10 +103,9 @@
 					
 					$(window).on('resize.slider', function(e){
 						$this.slider('show', $this.slider('selected'), true);
-						$this.find(settings.struct.carousel).css('width', $this.find(settings.struct.carousel+' '+'#'+settings.struct.idPrefix+'0').outerWidth() * (maxSlide($this)+1))
-					
+						$this.find(settings.struct.carousel).css('width', $this.find(settings.struct.carousel+' '+'#'+settings.struct.idPrefix+'0').outerWidth(true) * (maxSlide($this)+1))
 						return false;
-					})
+					}).trigger('resize.slider')
 					
 
 
@@ -191,7 +188,7 @@
 			return this.each(function(){
 				if (!index)return;
 				var $this = $(this), settings = $this.data('slider');
-				var w = $this.find(settings.struct.carousel+' '+index).outerWidth();
+				var w = $this.find(settings.struct.carousel+' '+index).outerWidth(true);
 				var target_element = $this.find(settings.struct.carousel+' '+index)
 				var sel_element = $this.find(settings.struct.carousel+' '+$this.slider('selected'))
 				var parent = target_element.parent();
