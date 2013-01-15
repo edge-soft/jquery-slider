@@ -44,7 +44,8 @@
 						},
 						'selectedClass'	: 'selected',
 						'continous' : false,
-						'arrowsControl' : true
+						'arrowsControl' : true,
+						'fadeInFadeOut' : false // add animation fadein target element fadeout all others elements
 					}
 					if (typeof options != 'undefined' && options.struct) options.struct = $.extend( default_settings.struct, options.struct);
 					var settings = $.extend( default_settings, options);
@@ -225,6 +226,16 @@
 					if (typeof offsetSpeed!='undefined'){
 						var distance = Math.abs(margin - parseInt(animate_el.css('margin-left').substring(0, animate_el.css('margin-left').length-2)));
 						speed = distance/offsetSpeed;
+					}
+					if(settings.fadeInFadeOut){
+						slider_elements.not(target_element).stop().clearQueue().animate({
+							'opacity':'0'
+							}, speed, settings.animateEasing, function(){
+								slider_elements.not(target_element).css('opacity',1)
+							})
+						target_element.css('opacity',0).stop().clearQueue().animate({
+							'opacity':'1'
+							}, speed, settings.animateEasing)
 					}
 					animate_el.stop().clearQueue().animate({
 						'margin-left':margin
