@@ -45,7 +45,8 @@
 						'selectedClass'	: 'selected',
 						'continous' : false,
 						'arrowsControl' : true,
-						'fadeInFadeOut' : false // add animation fadein target element fadeout all others elements
+						'fadeInFadeOut' : false, // add animation fadein target element fadeout all others elements
+						'preventRotation': true // Don't allow next and previous when there isn't (also hide next prev buttons). Don't work if continous is true
 					}
 					if (typeof options != 'undefined' && options.struct) options.struct = $.extend( default_settings.struct, options.struct);
 					var settings = $.extend( default_settings, options);
@@ -63,12 +64,12 @@
 					}
 					
 					$this.on('click.slider', settings.struct.next, function(e){e.preventDefault();
-						$this.slider('show', $this.slider('next'));
+						$this.slider('showNext');
 						return false;
 					});
 				
 					$this.on('click.slider', settings.struct.prev, function(e){e.preventDefault();
-						$this.slider('show', $this.slider('prev'));
+						$this.slider('showPrev');
 						return false;
 					});
 					
@@ -87,10 +88,10 @@
 							}
 							switch(keyboardKey){
 								case 37: // left arrow is pressed
-									$this.slider('show', $this.slider('prev'));
+									$this.slider('showPrev');
 									break
 								case 39: // right arrow is pressed
-									$this.slider('show', $this.slider('next'));
+									$this.slider('showNext');
 									break
 							}
 							return false;
@@ -123,7 +124,7 @@
 							if (direction == 'left'){
 								// if not last
 								if ($this.slider('hasNext')){
-									$this.slider('show', $this.slider('next'));
+									$this.slider('showNext');
 								}
 								else{
 									$this.slider('show', $this.slider('selected'));
@@ -132,7 +133,7 @@
 							else{
 								// if not first
 								if ($this.slider('hasPrev')){
-									$this.slider('show', $this.slider('prev'));
+									$this.slider('showPrev');
 								}
 								else{
 									$this.slider('show', $this.slider('selected'));
@@ -261,7 +262,33 @@
 				}
 				$this.find(settings.struct.slide).removeClass(settings.selectedClass);
 				$this.find(settings.struct.slide+'[href='+index+']').addClass(settings.selectedClass);
+				if( !settings.continous && settings.preventRotation ){
+					if( !$this.slider('hasNext') ){
+						$this.find(settings.struct.next).hide()
+					} else {
+						$this.find(settings.struct.next).show()
+					}
+					if( !$this.slider('hasPrev') ){
+						$this.find(settings.struct.prev).hide()
+					} else {
+						$this.find(settings.struct.prev).show()
+					}
+				}
 			});
+		},
+		showNext: function (){
+			var $this = $(this), settings = $this.data('slider');
+			if( !settings.continous && settings.preventRotation && !$this.slider('hasNext') ){
+				return
+			}
+			$this.slider('show', $this.slider('next'));
+		},
+		showPrev: function (){
+			var $this = $(this), settings = $this.data('slider');
+			if( !settings.continous && settings.preventRotation && !$this.slider('hasPrev') ){
+				return
+			}
+			$this.slider('show', $this.slider('prev'));
 		},
 		selected: function (){
 			var res = null;
@@ -325,7 +352,7 @@
 				var $this = $(this), settings = $this.data('slider');
 				if (!settings.auto_interval && !settings.stop){
 					settings.auto_interval = setInterval(function(){
-						$this.slider('show', $this.slider('next'));
+						$this.slider('showNext');
 					}, settings.auto*1000);
 					$this.data('slider', settings);
 				}
