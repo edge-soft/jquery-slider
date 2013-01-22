@@ -352,7 +352,19 @@
 				var $this = $(this), settings = $this.data('slider');
 				if (!settings.auto_interval && !settings.stop){
 					settings.auto_interval = setInterval(function(){
-						$this.slider('showNext');
+						settings = $this.data('slider')
+						settings.backward = settings.backward ? settings.backward : false;
+						if( settings.preventRotation && !settings.backward && !$this.slider('hasNext') ){
+							settings.backward = true
+						} else if ( settings.backward && !$this.slider('hasPrev') ){
+							settings.backward = false
+						}
+						if( settings.backward ){
+							$this.slider('showPrev');
+						} else {
+							$this.slider('showNext');
+						}
+						$this.data('slider', settings);
 					}, settings.auto*1000);
 					$this.data('slider', settings);
 				}
