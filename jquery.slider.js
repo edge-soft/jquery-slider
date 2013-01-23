@@ -46,7 +46,8 @@
 						'continous' : false,
 						'arrowsControl' : true,
 						'fadeInFadeOut' : false, // add animation fadein target element fadeout all others elements
-						'preventRotation': true // Don't allow next and previous when there isn't (also hide next prev buttons). Don't work if continous is true
+						'preventRotation': true, // Don't allow next and previous when there isn't (also hide next prev buttons). Don't work if continous is true
+						'noSwipeSelector':'button, input, select, textarea, .noSwipe'
 					}
 					if (typeof options != 'undefined' && options.struct) options.struct = $.extend( default_settings.struct, options.struct);
 					var settings = $.extend( default_settings, options);
@@ -75,7 +76,7 @@
 					
 					if(settings.arrowsControl){
 						$(window).on('keyup.slider', function(e){
-							if($(e.target).closest('.noSwipe').length){
+							if($(e.target).closest(settings.noSwipeSelector).length){
 								return
 							}
 							var keyboardKey = e.which?e.which:e.keyCode
@@ -161,7 +162,7 @@
 							swipeStatus: swipeStatus,
 							threshold:10,
 							allowPageScroll: 'vertical',
-							excludedElements: 'button, input, select, textarea, .noSwipe'
+							excludedElements: settings.noSwipeSelector
 						}
 
 						$this.find(settings.struct.frame).swipe(swipeOptions);
