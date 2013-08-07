@@ -42,6 +42,7 @@
 							'slide'				: 'a.slide',
 							'idPrefix'		: 'slider_'
 						},
+						'showNextPrevOnHover' : false,
 						'selectedClass'	: 'selected',
 						'continous' : false,
 						'arrowsControl' : true,
@@ -61,6 +62,23 @@
 							$this.slider('pause');
 						}).on('mouseleave.slider', function(){
 							$this.slider('resume');
+						});
+					}
+					if (settings.showNextPrevOnHover){
+						$this.on('mouseenter.slider', function(){
+							if($this.slider('hasNext')){
+								$this.find(settings.struct.next).show()
+							}
+							if($this.slider('hasPrev')){
+								$this.find(settings.struct.prev).show()
+							}
+							settings.hover = true;
+							$this.data('slider', settings);
+						}).on('mouseleave.slider', function(){
+							$this.find(settings.struct.prev).hide()
+							$this.find(settings.struct.next).hide()
+							settings.hover = false;
+							$this.data('slider', settings);
 						});
 					}
 					
@@ -266,12 +284,12 @@
 				if( !settings.continous && settings.preventRotation ){
 					if( !$this.slider('hasNext') ){
 						$this.find(settings.struct.next).hide()
-					} else {
+					} else if(!settings.showNextPrevOnHover || settings.hover) {
 						$this.find(settings.struct.next).show()
 					}
 					if( !$this.slider('hasPrev') ){
 						$this.find(settings.struct.prev).hide()
-					} else {
+					} else if(!settings.showNextPrevOnHover || settings.hover) {
 						$this.find(settings.struct.prev).show()
 					}
 				}
