@@ -351,7 +351,7 @@
 		resume: function(){
 			return this.each(function(){
 				var $this = $(this), settings = $this.data('slider');
-				if (!settings.auto_interval && !settings.stop){
+				if (!settings.auto_interval && !settings.stop && settings.auto){
 					settings.auto_interval = setInterval(function(){
 						settings = $this.data('slider')
 						settings.backward = settings.backward ? settings.backward : false;
