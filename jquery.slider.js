@@ -42,6 +42,12 @@
 							'slide'				: 'a.slide',
 							'idPrefix'		: 'slider_'
 						},
+						/**
+						 *  On which element hover to show next previous buttons
+						 *  for example (frame, carousel) if set to true work on
+						 *  hover entire slider - default false dont do anything
+						 *  on hover.
+						 */
 						'showNextPrevOnHover' : false,
 						'selectedClass'	: 'selected',
 						'continous' : false,
@@ -65,7 +71,12 @@
 						});
 					}
 					if (settings.showNextPrevOnHover){
-						$this.on('mouseenter.slider', function(){
+						var showNextPrevOnHoverElement = $this
+						if(settings.struct[settings.showNextPrevOnHover]){
+							showNextPrevOnHoverElement = 
+									$this.find(settings.struct[settings.showNextPrevOnHover])
+						}
+						showNextPrevOnHoverElement.on('mouseenter.slider', function(){
 							if($this.slider('hasNext')){
 								$this.find(settings.struct.next).show()
 							}
