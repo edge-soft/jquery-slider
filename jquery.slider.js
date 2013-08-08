@@ -304,6 +304,7 @@
 						$this.find(settings.struct.prev).show()
 					}
 				}
+				$this.trigger('show_element.slider', target_element)
 			});
 		},
 		showNext: function (){
