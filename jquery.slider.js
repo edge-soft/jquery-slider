@@ -189,6 +189,18 @@
 							swipeLeft:swipe,
 							swipeRight:swipe,
 							swipeStatus: swipeStatus,
+							click : function(e){
+								var anchor = $(e.target).closest('a');
+								var link_to_open = anchor.attr('href');
+								if(link_to_open){
+									$this.slider('pause');
+									var target = anchor.attr('target');
+									if(!target){
+										target = '_self';
+									}
+									window.open(link_to_open, target);
+								}
+							},
 							threshold:10,
 							allowPageScroll: 'vertical',
 							excludedElements: settings.noSwipeSelector
